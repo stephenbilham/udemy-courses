@@ -202,8 +202,7 @@ game();
 */
 
 // Closures
-
-/* 
+/*
 
 function retirement(retirementAge) {
   var a = " years left until retirement";
@@ -214,8 +213,39 @@ function retirement(retirementAge) {
 }
 
 var retirementUS = retirement(66);
-retirementUS(1990);
+var retirementGermany = retirement(65);
+var retirementIceland = retirement(67);
 
-retirement(66)(1990);
+retirementUS(1990);
+retirementGermany(1990);
+retirementIceland(1990);
+
+// retirement(66)(1990);
+
+*/
+
+/*
+
+function interviewQuestion(job) {
+  return function(name) {
+    if (job === "designer") {
+      console.log(name + " can you please explain what ux design is?");
+    } else if (job === "teacher") {
+      console.log("what subject do you teach, " + name + "?");
+    } else {
+      console.log("hello " + name + " what do you do?");
+    }
+  };
+}
+
+var interviewQuestionTeacher = interviewQuestion("teacher");
+var interviewQuestionDesigner = interviewQuestion("designer");
+var interviewQuestionAthlete = interviewQuestion("Athlete");
+
+interviewQuestionTeacher("mark");
+interviewQuestionDesigner("bob");
+interviewQuestionAthlete("mike");
+
+interviewQuestion("teacher")("mark"); // best no need for storing in variable
 
 */
