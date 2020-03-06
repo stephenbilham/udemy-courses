@@ -467,3 +467,141 @@ console.log(fullJapan);
 */
 
 //// DONE With GAME
+
+// Coding in ES6!! ///
+
+// let and const
+
+//ES5
+/*
+var name5 = "jane smith";
+var age5 = 23;
+name5 = "jane miller";
+console.log(name5);
+*/
+
+//ES6
+
+// const name6 = "jane smith";
+// let age6 = 23;
+// name6 = "jane miller";
+// console.log(name6); // error! declared to const
+
+//ES5
+/*
+function driversLicense(passedTest) {
+  if (passedTest) {
+    var firstName = "John";
+    var yearOfBirth = 1990;
+
+    console.log(firstName + ", passed the test and was born in " + yearOfBirth);
+  }
+}
+driversLicense(true);
+*/
+
+//ES6
+/*
+function driversLicense(passedTest) {
+  let firstName;
+  const yearOfBirth = 1990;
+  if (passedTest) {
+    firstName = "john";
+  }
+  console.log(firstName + ", passed the test and was born in " + yearOfBirth);
+}
+driversLicense(true);
+*/
+
+// BLocks and IFFES ES6
+/*
+{
+  // es6 block
+  const a = 1;
+  let b = 2;
+  var c = 3; // this can be read
+} // block
+
+// console.log(a + b);
+console.log(c);
+//block scoped - cant console.log outside
+
+// ES5
+
+(function() {
+  var c = 3;
+})();
+console.log(c);
+
+// old way es6 is much better ^^^^
+*/
+
+// Strings //////////////////////////////////
+/*
+
+let firstName = "John";
+let lastName = "Smith";
+const yearOfBirth = 1990;
+
+function calcAge(year) {
+  return 2016 - year;
+}
+
+//ES5
+console.log(
+  "This is " +
+    firstName +
+    " " +
+    lastName +
+    ". he was born in " +
+    yearOfBirth +
+    ". Today he is " +
+    calcAge(yearOfBirth) +
+    " years old."
+);
+
+//ES6
+//template literals // string intercompilation
+console.log(
+  `This is ${firstName} ${lastName} he was born in ${yearOfBirth}. Today he is ${calcAge(
+    yearOfBirth
+  )} years old.    `
+);
+
+const n = `${firstName} ${lastName}`;
+console.log(n.startsWith("J"));
+console.log(n.startsWith("n"));
+console.log(n.startsWith("j"));
+console.log(n.endsWith("h"));
+console.log(n.includes(" "));
+console.log(n.includes("oh"));
+console.log(`${firstName} `.repeat(5));
+*/
+
+const years = [1990, 1965, 1982, 1937];
+
+//ES5
+
+var ages5 = years.map(function(el) {
+  return 2016 - el;
+});
+
+console.log(ages5);
+
+// ES6;
+
+// let ages6 = years.map(el => 2016 - el);
+// console.log(ages6);
+
+// ages6 = years.map((el, index) => `age element ${index + 1}: ${2016 - el}.`);
+// console.log(ages6);
+
+/*
+ages6 = years.map((el, index) => {
+  const now = new Date().getFullYear();
+  const age = now - el;
+  console.log(age);
+  return `age element ${index + 1}: ${age}.`;
+});
+console.log(ages6);
+*/
