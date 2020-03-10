@@ -605,3 +605,7 @@ ages6 = years.map((el, index) => {
 });
 console.log(ages6);
 */
+
+// arrow functions 2
+
+//ES 5
