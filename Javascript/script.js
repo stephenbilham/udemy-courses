@@ -1,13 +1,12 @@
-/*
-
 // function constructor
 
-var john = {
-  name: "john",
-  yearOfBirth: 1990,
-  job: "teacher"
-};
+// var john = {
+//   name: "john",
+//   yearOfBirth: 1990,
+//   job: "teacher"
+// };
 
+/*
 var Person = function(name, yearOfBirth, job) {
   this.name = name;
   this.yearOfBirth = yearOfBirth;
@@ -35,10 +34,7 @@ console.log(john.lastName);
 console.log(jane.lastName);
 console.log(mark.lastName);
 
-*/
-
 //object.create
-
 /*
 
 var personProto = {
@@ -105,7 +101,7 @@ console.log(obj.city);
 
 ////////////////////////
 
-// passing functions as arugments
+// passing functions as arguments
 
 /*
 
