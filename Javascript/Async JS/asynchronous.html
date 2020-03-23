@@ -55,43 +55,43 @@
       getRecipe();
       */
 
-      const getIDs = new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve([523, 232, 667, 854]);
-        }, 1500);
-      });
+      //   const getIDs = new Promise((resolve, reject) => {
+      //     setTimeout(() => {
+      //       resolve([523, 232, 667, 854]);
+      //     }, 1500);
+      //   });
 
-      const getRecipe = recID => {
-        return new Promise((resolve, reject) => {
-          setTimeout(
-            ID => {
-              const recipe = {
-                title: "fresh tomato pasta",
-                publisher: "steve"
-              };
-              resolve(`${ID}: ${recipe.title}`);
-            },
-            1500,
-            recID
-          );
-        });
-      };
+      //   const getRecipe = recID => {
+      //     return new Promise((resolve, reject) => {
+      //       setTimeout(
+      //         ID => {
+      //           const recipe = {
+      //             title: "fresh tomato pasta",
+      //             publisher: "steve"
+      //           };
+      //           resolve(`${ID}: ${recipe.title}`);
+      //         },
+      //         1500,
+      //         recID
+      //       );
+      //     });
+      //   };
 
-      const getRelated = publisher => {
-        return new Promise((resolve, rejected) => {
-          setTimeout(
-            pub => {
-              const recipe = {
-                title: "italian pizza",
-                publisher: "steve"
-              };
-              resolve(`${pub}: ${recipe.title}`);
-            },
-            1500,
-            publisher
-          );
-        });
-      };
+      //   const getRelated = publisher => {
+      //     return new Promise((resolve, rejected) => {
+      //       setTimeout(
+      //         pub => {
+      //           const recipe = {
+      //             title: "italian pizza",
+      //             publisher: "steve"
+      //           };
+      //           resolve(`${pub}: ${recipe.title}`);
+      //         },
+      //         1500,
+      //         publisher
+      //       );
+      //     });
+      //   };
 
       //   getIDs
       //     .then(IDs => {
@@ -110,17 +110,38 @@
       //     });
 
       // ASYC WAY OF DOING THIS ^^
-      async function getRecipesAW() {
-        const IDs = await getIDs;
-        console.log(IDs);
-        const recipe = await getRecipe(IDs[2]);
-        console.log(recipe);
-        const related = await getRelated("steve");
-        console.log(related);
+      //   async function getRecipesAW() {
+      //     const IDs = await getIDs;
+      //     console.log(IDs);
+      //     const recipe = await getRecipe(IDs[2]);
+      //     console.log(recipe);
+      //     const related = await getRelated("steve");
+      //     console.log(related);
 
-        return recipe;
+      //     return recipe;
+      //   }
+      //   getRecipesAW().then(result => console.log(`${result} is the best ever`));
+
+      function getWeather(woeid) {
+        fetch(
+          `https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/${woeid}/`
+        )
+          .then(result => {
+            console.log(result);
+            return result.json();
+          })
+          .then(data => {
+            //console.log(data); all data
+            const today = data.consolidated_weather[0];
+            console.log(
+              `Temperatures in ${data.title} stay between ${today.min_temp} and ${today.max_temp}`
+            );
+          })
+          .catch(error => console.log(error));
       }
-      getRecipesAW().then(result => console.log(`${result} is the best ever`));
+
+      getWeather(2487956);
+      getWeather(44418);
     </script>
   </body>
 </html>
