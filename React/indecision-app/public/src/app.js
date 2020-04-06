@@ -10,44 +10,54 @@
 const app = {
   title: "indecision app",
   subtitle: "put your life in the hands of a computer",
-  options: ["one", "two"]
+  options: []
 };
 
-const template = (
-  <div>
-    <h1>{app.title.toUpperCase()}</h1>
-    {app.subtitle && <p>{app.subtitle}</p>}
-    <p>{app.options.length > 0 ? "here are your options" : "no options"}</p>
-    <ol>
-      <li>item one</li>
-      <li>item two</li>
-      <li>item three</li>
-    </ol>
-  </div>
-);
-
-const user = {
-  name: "Stephen",
-  age: "26",
-  location: "Malibu"
-};
-
-const getLocation = location => {
-  if (location) {
-    return <p>location: {location}</p>;
-  } else {
+const onFormSubmit = e => {
+  e.preventDefault();
+  const option = e.target.elements.option.value;
+  if (option) {
+    app.options.push(option);
+    e.target.elements.option.value = "";
+    render();
   }
 };
 
-const templateTwo = (
-  <div>
-    <h1>{user.name ? user.name : "Anonymous"}</h1>
-    {user.age && user.age >= 18 && <p> Age: {user.age}</p>}
-    {getLocation(user.location)}
-  </div>
-);
+const removeOptions = () => {
+  app.options = [];
+  render();
+};
+
+const onMakeDecision = () => {
+  const randomNum = Math.floor(Math.random() * app.options.length);
+  const option = app.options[randomNum];
+  if (option) {
+    alert(option);
+  }
+};
+
 const appRoot = document.getElementById("app");
+const render = () => {
+  const template = (
+    <div>
+      <h1>{app.title.toUpperCase()}</h1>
+      {app.subtitle && <p>{app.subtitle}</p>}
+      <p>{app.options.length > 0 ? "here are your options" : "no options"}</p>
+      <button onClick={onMakeDecision}>What should I do?</button>
+      <button onClick={removeOptions}>Remove all</button>
 
-ReactDOM.render(template, appRoot);
+      <ol>
+        {app.options.map(option => (
+          <li key={option}>{option}</li>
+        ))}
+      </ol>
+      <form onSubmit={onFormSubmit}>
+        <input type="text" name="option" />
+        <button>Add Options</button>
+      </form>
+    </div>
+  );
+  ReactDOM.render(template, appRoot);
+};
 
-//not a big fan of {user.age && user.age >= 18 && <p> Age: {user.age}</p>} This could be coded better as a ternary or a function; the && operator is to value if two conditons are true then return something but it is used in a way to return something <p> this contradicts why i use them.
+render();
