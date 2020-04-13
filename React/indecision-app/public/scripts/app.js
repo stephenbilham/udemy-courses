@@ -22,6 +22,7 @@ var IndecisionApp = function (_React$Component) {
     _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
     _this.handlePick = _this.handlePick.bind(_this);
     _this.handleAddOption = _this.handleAddOption.bind(_this);
+    _this.handleDeleteOption = _this.handleDeleteOption.bind(_this);
     _this.state = {
       options: props.options
     };
@@ -29,6 +30,30 @@ var IndecisionApp = function (_React$Component) {
   }
 
   _createClass(IndecisionApp, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      try {
+        var json = localStorage.getItem("options");
+        var options = JSON.parse(json);
+        if (options) {
+          this.setState({ options: options });
+        }
+      } catch (error) {
+        // do nothing at all
+      }
+    } //lifeCycle
+
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (prevState.options.length !== this.state.options.length) {
+        var json = JSON.stringify(this.state.options);
+        localStorage.setItem("options", json);
+        console.log("saving data");
+      }
+    } //lifeCycle
+
+  }, {
     key: "handleDeleteOptions",
     value: function handleDeleteOptions() {
       this.setState(function () {
@@ -36,6 +61,7 @@ var IndecisionApp = function (_React$Component) {
           options: []
         };
       });
+
       // this.setState({ options: [] }); // old way
     }
   }, {
@@ -55,7 +81,18 @@ var IndecisionApp = function (_React$Component) {
       }
       this.setState(function (prevState) {
         return {
-          options: prevState.options.concat(option) // if breaks put brackets around arguement
+          options: prevState.options.concat(option)
+        };
+      });
+    }
+  }, {
+    key: "handleDeleteOption",
+    value: function handleDeleteOption(optionToRemove) {
+      this.setState(function (prevState) {
+        return {
+          options: prevState.options.filter(function (option) {
+            return optionToRemove !== option;
+          })
         };
       });
     }
@@ -75,7 +112,8 @@ var IndecisionApp = function (_React$Component) {
         }),
         React.createElement(Options, {
           options: this.state.options,
-          handleDeleteOptions: this.handleDeleteOptions
+          handleDeleteOptions: this.handleDeleteOptions,
+          handleDeleteOption: this.handleDeleteOption
         }),
         React.createElement(AddOption, { handleAddOption: this.handleAddOption })
       );
@@ -121,7 +159,6 @@ var Action = function Action(props) {
     )
   );
 };
-
 //CONVERTED THIS TO STATELESS KEEPING IT FOR REFERERNCE ^^
 // class Action extends React.Component {
 //   render() {
@@ -145,8 +182,17 @@ var Options = function Options(props) {
       { onClick: props.handleDeleteOptions },
       "Remove All"
     ),
+    props.options.length === 0 && React.createElement(
+      "p",
+      null,
+      "Please add an option :)"
+    ),
     props.options.map(function (option) {
-      return React.createElement(Option, { key: option, optionText: option });
+      return React.createElement(Option, {
+        key: option,
+        optionText: option,
+        handleDeleteOption: props.handleDeleteOption
+      });
     })
   );
 };
@@ -155,7 +201,16 @@ var Option = function Option(props) {
   return React.createElement(
     "div",
     null,
-    props.optionText
+    props.optionText,
+    React.createElement(
+      "button",
+      {
+        onClick: function onClick(e) {
+          props.handleDeleteOption(props.optionText);
+        }
+      },
+      "remove"
+    )
   );
 };
 
@@ -179,11 +234,15 @@ var AddOption = function (_React$Component2) {
     value: function handleAddOption(e) {
       e.preventDefault();
       var option = e.target.elements.option.value.trim();
-      var error = this.props.handleAddOption(option); //intial state is no error (undefined) then error is set to error in event handler in Indecision app.
+      var error = this.props.handleAddOption(option);
+
+      if (!error) {
+        e.target.elements.option.value = "";
+      }
+
+      //intial state is no error (undefined) then error is set to error in event handler in Indecision app.
       this.setState(function () {
-        return {
-          error: error
-        };
+        return { error: error };
       });
     }
   }, {
@@ -203,7 +262,7 @@ var AddOption = function (_React$Component2) {
           React.createElement(
             "label",
             null,
-            React.createElement("input", { type: "text", name: "option" })
+            React.createElement("input", { className: "submitForm", type: "text", name: "option" })
           ),
           React.createElement("input", { type: "submit", value: "Submit" })
         )
