@@ -7,19 +7,39 @@ class IndecisionApp extends React.Component {
     this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
     this.handlePick = this.handlePick.bind(this);
     this.handleAddOption = this.handleAddOption.bind(this);
+    this.handleDeleteOption = this.handleDeleteOption.bind(this);
     this.state = {
       options: props.options
     };
   }
+  componentDidMount() {
+    try {
+      const json = localStorage.getItem("options");
+      const options = JSON.parse(json);
+      if (options) {
+        this.setState({ options: options });
+      }
+    } catch (error) {
+      // do nothing at all
+    }
+  } //lifeCycle
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.options.length !== this.state.options.length) {
+      const json = JSON.stringify(this.state.options);
+      localStorage.setItem("options", json);
+      console.log("saving data");
+    }
+  } //lifeCycle
 
   handleDeleteOptions() {
-    this.setState(() => {
-      return {
-        options: []
-      };
-    });
+    this.setState(() => ({
+      options: []
+    }));
+
     // this.setState({ options: [] }); // old way
   }
+
   handlePick() {
     const randomNum = Math.floor(Math.random() * this.state.options.length);
     const randomPick = this.state.options[randomNum];
@@ -32,11 +52,15 @@ class IndecisionApp extends React.Component {
     } else if (this.state.options.indexOf(option) > -1) {
       return "this option already exists";
     }
-    this.setState(prevState => {
-      return {
-        options: prevState.options.concat(option) // if breaks put brackets around arguement
-      };
-    });
+    this.setState(prevState => ({
+      options: prevState.options.concat(option)
+    }));
+  }
+
+  handleDeleteOption(optionToRemove) {
+    this.setState(prevState => ({
+      options: prevState.options.filter(option => optionToRemove !== option)
+    }));
   }
 
   render() {
@@ -53,6 +77,7 @@ class IndecisionApp extends React.Component {
         <Options
           options={this.state.options}
           handleDeleteOptions={this.handleDeleteOptions}
+          handleDeleteOption={this.handleDeleteOption}
         />
         <AddOption handleAddOption={this.handleAddOption} />
       </div>
@@ -86,7 +111,6 @@ const Action = props => {
     </div>
   );
 };
-
 //CONVERTED THIS TO STATELESS KEEPING IT FOR REFERERNCE ^^
 // class Action extends React.Component {
 //   render() {
@@ -105,15 +129,31 @@ const Options = props => {
   return (
     <div>
       <button onClick={props.handleDeleteOptions}>Remove All</button>
+      {props.options.length === 0 && <p>Please add an option :)</p>}
       {props.options.map(option => (
-        <Option key={option} optionText={option} />
+        <Option
+          key={option}
+          optionText={option}
+          handleDeleteOption={props.handleDeleteOption}
+        />
       ))}
     </div>
   );
 };
 
 const Option = props => {
-  return <div>{props.optionText}</div>;
+  return (
+    <div>
+      {props.optionText}
+      <button
+        onClick={e => {
+          props.handleDeleteOption(props.optionText);
+        }}
+      >
+        remove
+      </button>
+    </div>
+  );
 };
 
 class AddOption extends React.Component {
@@ -124,23 +164,27 @@ class AddOption extends React.Component {
       error: undefined
     };
   }
+
   handleAddOption(e) {
     e.preventDefault();
     const option = e.target.elements.option.value.trim();
-    const error = this.props.handleAddOption(option); //intial state is no error (undefined) then error is set to error in event handler in Indecision app.
-    this.setState(() => {
-      return {
-        error: error
-      };
-    });
+    const error = this.props.handleAddOption(option);
+
+    if (!error) {
+      e.target.elements.option.value = "";
+    }
+
+    //intial state is no error (undefined) then error is set to error in event handler in Indecision app.
+    this.setState(() => ({ error: error }));
   }
+
   render() {
     return (
       <div>
         {this.state.error && <p>{this.state.error}</p>}
         <form onSubmit={this.handleAddOption}>
           <label>
-            <input type="text" name="option" />
+            <input className="submitForm" type="text" name="option" />
           </label>
           <input type="submit" value="Submit" />
         </form>
