@@ -15,6 +15,12 @@
   opacity: 0.5;
 }
 
+@media (max-width: $desktop-breakpoint) {
+  .big-button {
+    margin-bottom: $l-size;
+  }
+}
+
 //button
 .button {
   background: $purple;
