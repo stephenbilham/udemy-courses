@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { removeExpense } from "../actions/expenses";
 
 //Export a stateless functional component
 // discription, amount, createAt;
