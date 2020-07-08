@@ -1,4 +1,5 @@
 import moment from "moment";
+import selectExpensesTotal from "../../selectors/expenses-total";
 export const expenses = [
   {
     id: "1",

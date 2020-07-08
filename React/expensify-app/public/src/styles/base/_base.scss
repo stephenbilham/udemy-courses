@@ -1,12 +1,19 @@
 // 1 rem = 16px
+
+* {
+  box-sizing: border-box;
+}
+
 html {
   font-size: 62.5%; // translates rem to pixels easier (10base). really cool. ex. 2.2rem = 22 px
 }
 
 body {
+  color: $dark-grey;
   background: $white;
   font-family: Helvetica, Arial, sans-serif;
   font-size: $m-size;
+  line-height: 1.6;
 }
 
 button {
@@ -19,10 +26,4 @@ button:disabled {
 
 .is-active {
   font-weight: bold;
-}
-
-.nav-bar {
-  display: flex;
-  justify-content: space-between;
-  margin: 2.5% 2.5%;
 }

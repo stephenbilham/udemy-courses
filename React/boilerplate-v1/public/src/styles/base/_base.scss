@@ -1,0 +1,18 @@
+// 1 rem = 16px
+html {
+  font-size: 62.5%; // translates rem to pixels easier (10base). really cool. ex. 2.2rem = 22 px
+}
+
+body {
+  background: $white;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: $m-size;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
