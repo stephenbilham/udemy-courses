@@ -1,0 +1,60 @@
+.box-layout {
+  align-items: center;
+  background: url("/image/bg.jpg");
+  background-size: cover;
+  display: flex;
+  height: 100vh;
+  justify-content: flex-end;
+  width: 100vw;
+  line-height: 1;
+
+  &__box {
+    border-radius: 3px;
+    font-family: poppins;
+    font-size: 30px;
+    padding: 9%;
+    position: absolute;
+    color: #e5e5e5;
+    margin: 0;
+
+    h1 {
+      font-size: 72px;
+      margin: 0;
+      color: #e5e5e5;
+    }
+  }
+
+  .title__span {
+    background: linear-gradient(to right, #a68dd3, #ff0088);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+@media only screen and (max-width: $screen-tablet) {
+  .box-layout {
+    h1 {
+      font-size: 60px;
+      margin: 0;
+    }
+    p {
+      font-size: 26px;
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-mobile) {
+  .box-layout {
+    h1 {
+      font-size: 42px;
+      margin: 0;
+    }
+    p {
+      font-size: 16px;
+    }
+    .btn {
+      padding: 10px 26px;
+      font-size: 15px;
+    }
+  }
+}

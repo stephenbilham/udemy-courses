@@ -1,0 +1,15 @@
+.content-container {
+  padding: 0 6rem;
+  margin: 0 auto;
+  h1 {
+    font-weight: 300;
+  }
+}
+
+.content-container--secondary {
+  @extend .content-container;
+  padding: 0px 20rem 0 5.25rem;
+  @media (min-width: $desktop-breakpoint) {
+    padding: 0 6rem;
+  }
+}
