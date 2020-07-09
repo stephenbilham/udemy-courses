@@ -92,8 +92,8 @@ body {
   animation-duration: 1s;
   animation-timing-function: ease-out;
   /*
-    animation-delay: 3s;
-    animation-iteration-count: 3; --> for loop. runs 3 times*/
+  animation-delay: 3s;
+  animation-iteration-count: 3; --> for loop. runs 3 times*/
   display: block;
   font-size: 60px;
   font-weight: 400;
