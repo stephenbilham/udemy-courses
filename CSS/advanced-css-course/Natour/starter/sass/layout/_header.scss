@@ -1,0 +1,38 @@
+.header {
+  background-image: linear-gradient(
+      to right bottom,
+      rgba($color-primary-light, 0.8),
+      rgba($color-primary-dark, 0.8)
+    ),
+    url(../img/hero.jpg);
+  background-size: cover;
+  background-position: top; /* center is nice too  */
+  height: 95vh;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 75%,
+    0 100%
+  ); /* bennettfeely.com/clippy/*/
+  position: relative;
+
+  &__logo {
+    height: 3.5rem;
+    width: auto;
+
+    &-box {
+      position: absolute;
+      top: 4rem;
+      left: 4rem;
+    }
+  }
+
+  &__text-box {
+    left: 50%;
+    position: absolute;
+    top: 40%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    width: 70rem;
+  }
+}
