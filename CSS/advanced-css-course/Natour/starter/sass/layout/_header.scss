@@ -9,6 +9,7 @@
   background-position: top; /* center is nice too  */
   height: 95vh;
   clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
   /* bennettfeely.com/clippy/*/
   position: relative;
 
