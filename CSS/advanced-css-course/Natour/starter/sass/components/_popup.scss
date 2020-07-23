@@ -95,6 +95,10 @@
     -ms-hyphens: auto;
     -webkit-hyphens: auto;
     hyphens: auto;
+
+    @include respond(tab-port) {
+      margin-bottom: 2rem;
+    }
   }
 
   &:target {
