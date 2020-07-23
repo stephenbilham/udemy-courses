@@ -23,9 +23,39 @@
     transition: all 0.4s 0.2s;
   }
 
+  &__heading-secondary {
+    width: 100%;
+
+    @include respond(tab-land) {
+      text-align: center;
+    }
+  }
+
+  &__heading-tertiary {
+    width: 100%;
+
+    @include respond(tab-land) {
+      text-align: center;
+    }
+  }
+
+  &__btn {
+    width: 100%;
+    @include respond(tab-land) {
+      text-align: center;
+      padding: 2rem 0;
+      margin-bottom: 4rem;
+    }
+  }
+
   &__left {
     width: 33.33333333%;
     display: table-cell;
+
+    @include respond(tab-land) {
+      display: table-row;
+      width: 48.5.666666667%;
+    }
   }
 
   &__right {
@@ -33,11 +63,20 @@
     display: table-cell;
     vertical-align: middle;
     padding: 3rem 5rem;
+
+    @include respond(tab-land) {
+      display: table-row;
+      vertical-align: middle;
+    }
   }
 
   &__img {
     width: 100%;
     display: block;
+    @include respond(tab-land) {
+      width: 50%;
+      display: inline-block;
+    }
   }
 
   &__text {
