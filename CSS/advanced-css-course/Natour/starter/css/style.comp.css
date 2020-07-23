@@ -816,7 +816,7 @@ body {
   background-color: #fff;
   height: 7rem;
   width: 7rem;
-  position: fixed;
+  position: absolute;
   top: 6rem;
   right: 6rem;
   border-radius: 50%;
@@ -837,7 +837,7 @@ body {
   height: 6rem;
   width: 6rem;
   border-radius: 50%;
-  position: fixed;
+  position: absolute;
   top: 6.5rem;
   right: 6.5rem;
   background-image: radial-gradient(#7ed56f, #28b485);
