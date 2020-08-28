@@ -7,7 +7,7 @@
     background-color: $color-white;
     height: 7rem;
     width: 7rem;
-    position: fixed;
+    position: absolute;
     top: 6rem;
     right: 6rem;
     border-radius: 50%;
@@ -30,7 +30,7 @@
     height: 6rem;
     width: 6rem;
     border-radius: 50%;
-    position: fixed;
+    position: absolute;
     top: 6.5rem;
     right: 6.5rem;
     background-image: radial-gradient(
