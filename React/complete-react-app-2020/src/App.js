@@ -6,38 +6,36 @@ import { Person } from "./components/Person/Person";
 const App = () => {
   const [personsState, setPersonsState] = useState({
     persons: [
-      { name: "steve", age: 26 },
-      { name: "Tif", age: 46 },
-      { name: "Nud", age: 24 }
+      { id: "sddfsd", name: "steve", age: 26 },
+      { id: "sshgfd", name: "Tif", age: 46 },
+      { id: "cfdsks", name: "Nud", age: 24 }
     ]
   });
 
   const [showPersons, setShowPersons] = useState(false);
 
-  // const switchPersonInfo = name => {
-  //   setPersonsState({
-  //     persons: [
-  //       { name: name, age: 23 },
-  //       { name: "Tif", age: 42 },
-  //       { name: "Nud", age: 34 }
-  //     ]
-  //   });
-  // };
+  const nameChangedHandler = (e, id) => {
+    const personIndex = personsState.persons.findIndex(person => {
+      return person.id === id;
+    });
 
-  // const nameChangedHandler = e => {
-  //   e.preventDefault();
-  //   setPersonsState({
-  //     persons: [
-  //       { name: "steve", age: 23 },
-  //       { name: e.target.value, age: 42 },
-  //       { name: "byan", age: 34 }
-  //     ]
-  //   });
-  // };
+    const person = {
+      ...personsState.persons[personIndex]
+    };
 
-  const deletePersonHandler = index => {
+    person.name = e.target.value;
+
     const persons = [...personsState.persons];
-    persons.splice(index, 1);
+    persons[personIndex] = person;
+
+    setPersonsState({
+      persons: persons
+    });
+  };
+
+  const deletePersonHandler = personIndex => {
+    const persons = [...personsState.persons];
+    persons.splice(personIndex, 1);
     setPersonsState({ persons });
   };
 
@@ -61,8 +59,9 @@ const App = () => {
         {personsState.persons.map((person, index) => {
           return (
             <Person
-              key={person.name}
+              key={person.id}
               deletePersonHandler={() => deletePersonHandler(index)}
+              nameChangedHandler={event => nameChangedHandler(event, person.id)}
               name={person.name}
               age={person.age}
             />

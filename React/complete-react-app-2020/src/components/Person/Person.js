@@ -8,8 +8,8 @@ export const Person = props => {
         I am a {props.name} and i am {props.age} years old!
       </p>
       <p> {props.children}</p>
-      <inputpro
-        type="text "
+      <input
+        type="text"
         onChange={props.nameChangedHandler}
         value={props.name}
       />
