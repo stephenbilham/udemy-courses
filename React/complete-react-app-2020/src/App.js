@@ -1,49 +1,86 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import "./App.css";
 
-import { Person } from "./components/Person";
+import { Person } from "./components/Person/Person";
 
-class App extends Component {
-  state = {
+const App = () => {
+  const [personsState, setPersonsState] = useState({
     persons: [
       { name: "steve", age: 26 },
       { name: "Tif", age: 46 },
       { name: "Nud", age: 24 }
     ]
+  });
+
+  const [showPersons, setShowPersons] = useState(false);
+
+  // const switchPersonInfo = name => {
+  //   setPersonsState({
+  //     persons: [
+  //       { name: name, age: 23 },
+  //       { name: "Tif", age: 42 },
+  //       { name: "Nud", age: 34 }
+  //     ]
+  //   });
+  // };
+
+  // const nameChangedHandler = e => {
+  //   e.preventDefault();
+  //   setPersonsState({
+  //     persons: [
+  //       { name: "steve", age: 23 },
+  //       { name: e.target.value, age: 42 },
+  //       { name: "byan", age: 34 }
+  //     ]
+  //   });
+  // };
+
+  const deletePersonHandler = index => {
+    const persons = [...personsState.persons];
+    persons.splice(index, 1);
+    setPersonsState({ persons });
   };
 
-  switchNameHandler = () => {
-    console.log("you just called me what can I do");
-    this.setState({
-      persons: [
-        { name: "steve", age: 27 },
-        { name: "Tif", age: 47 },
-        { name: "Nud", age: 25 }
-      ]
-    });
+  const togglePersonHandler = () => {
+    setShowPersons(!showPersons);
   };
 
-  render() {
-    return (
-      <div className="App">
-        <h1>Hey, I am a react app</h1>
-        <button onClick={this.switchNameHandler}>Switch Name</button>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age}
-        />
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age}
-        >
-          I love nothing
-        </Person>
-        <Person
-          name={this.state.persons[2].name}
-          age={this.state.persons[2].age}
-        />
+  const style = {
+    backgroundColor: "white",
+    font: "inherit",
+    border: "1px solid blue",
+    padding: "8px",
+    cursor: "pointer"
+  };
+
+  let persons = null;
+
+  if (showPersons) {
+    persons = (
+      <div>
+        {personsState.persons.map((person, index) => {
+          return (
+            <Person
+              key={person.name}
+              deletePersonHandler={() => deletePersonHandler(index)}
+              name={person.name}
+              age={person.age}
+            />
+          );
+        })}
       </div>
     );
   }
-}
+
+  return (
+    <div className="App">
+      <h1>Hey, I am a react app</h1>
+      <button style={style} onClick={togglePersonHandler}>
+        toggle persons
+      </button>
+      {persons}
+    </div>
+  );
+};
+
 export default App;
