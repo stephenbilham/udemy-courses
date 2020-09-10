@@ -1,9 +1,8 @@
 .person {
   width: 60%;
-  margin: auto;
+  margin: 16px auto;
   border: 1px solid #eee;
+  box-shadow: 2px 2px #888888;
   padding: 16px;
   text-align: center;
-  margin-bottom: 7px;
-  margin-top: 7px;
 }
