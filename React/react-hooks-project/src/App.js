@@ -1,24 +1,7 @@
 import React, { Component } from "react";
-import styled from "styled-components";
 import "./App.css";
 
 import Person from "./Components/Person";
-
-const StyledButton = styled.button`
-  background-color: ${props => (props.dynamicStyles ? "red" : "green")};
-  font: inherit;
-  color: white;
-  border: 1px solid blue;
-  padding: 8px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${props =>
-      props.dynamicStyles ? "salmon" : "lightgreen"};
-
-    color: black;
-  }
-`;
 
 class App extends Component {
   state = {
@@ -115,12 +98,13 @@ class App extends Component {
       <div className="App">
         <h1>Hello, I am a React App</h1>
         <p className={classes.join(" ")}>This is really working!</p>
-        <StyledButton
+        <button
+          className="button"
           dynamicStyles={this.state.showPersons}
           onClick={this.togglePersonHandler}
         >
           Switch Name
-        </StyledButton>
+        </button>
         <div>{persons}</div>
       </div>
     );
