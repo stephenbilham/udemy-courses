@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+import styles from "./App.module.css";
 
 import Person from "./Components/Person";
 
@@ -58,6 +58,7 @@ class App extends Component {
 
   render() {
     let persons = null;
+    let btnClass = ""; //makes it an array so you can push new classes with js func
 
     if (this.state.showPersons) {
       persons = (
@@ -76,33 +77,24 @@ class App extends Component {
         </div>
       );
 
-      // style.backgroundColor = "red ";
-      // //radium
-      // style[":hover"] = {
-      //   backgroundColor: "salmon",
-      //   color: "black"
-      // };
+      btnClass = styles.red;
     }
 
-    const classes = [];
+    const assignedClasses = [];
 
     if (this.state.persons.length <= 2) {
-      classes.push("red");
+      assignedClasses.push(styles.red);
     }
 
     if (this.state.persons.length <= 1) {
-      classes.push("bold");
+      assignedClasses.push(styles.bold);
     }
 
     return (
-      <div className="App">
+      <div className={styles.App}>
         <h1>Hello, I am a React App</h1>
-        <p className={classes.join(" ")}>This is really working!</p>
-        <button
-          className="button"
-          dynamicStyles={this.state.showPersons}
-          onClick={this.togglePersonHandler}
-        >
+        <p className={assignedClasses.join(" ")}>This is really working!</p>
+        <button className={btnClass} onClick={this.togglePersonHandler}>
           Switch Name
         </button>
         <div>{persons}</div>
