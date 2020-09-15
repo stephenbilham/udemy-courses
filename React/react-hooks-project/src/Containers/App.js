@@ -5,6 +5,10 @@ import Persons from "../Components/Persons/Persons";
 import Cockpit from "../Components/Cockpit/Cockpit";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   state = {
     persons: [
       {
@@ -25,6 +29,10 @@ class App extends Component {
     ],
     showPersons: false
   };
+
+  static getDerivedStateFromProps(props, state) {}
+
+  componentDidMount = () => {};
 
   nameChangeHandler = (e, id) => {
     const personIndex = this.state.persons.findIndex(person => {
@@ -73,6 +81,7 @@ class App extends Component {
     return (
       <div className={styles.App}>
         <Cockpit
+          title={this.props.title}
           persons={this.state.persons}
           showPersons={this.state.showPersons}
           togglePersonHandler={this.togglePersonHandler}
