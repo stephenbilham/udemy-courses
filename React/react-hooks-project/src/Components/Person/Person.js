@@ -1,21 +1,25 @@
-import React from "react";
+import React, { Component } from "react";
 
 import styles from "./Person.module.css";
+import withClass from "../../hoc/withClass";
+import Aux from "../../hoc/Aux";
 
-const Person = props => {
-  return (
-    <div className={styles.person}>
-      <p onClick={props.deletePersonHandler}>
-        I am a {props.name} and i am {props.age} old
-      </p>
-      <p>{props.children}</p>
-      <input
-        type="text"
-        onChange={props.nameChangeHandler}
-        value={props.name}
-      />
-    </div>
-  );
-};
+class Person extends Component {
+  render() {
+    return (
+      <Aux>
+        <p onClick={this.props.deletePersonHandler}>
+          I am a {this.props.name} and i am {this.props.age} old
+        </p>
+        <p>{this.props.children}</p>
+        <input
+          type="text"
+          onChange={this.props.nameChangeHandler}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
 
-export default Person;
+export default withClass(Person, styles.Person);
