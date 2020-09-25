@@ -3,6 +3,8 @@ import styles from "./App.module.css";
 
 import Persons from "../Components/Persons/Persons";
 import Cockpit from "../Components/Cockpit/Cockpit";
+import Aux from "../hoc/Aux";
+import withClass from "../hoc/withClass";
 
 class App extends Component {
   state = {
@@ -23,8 +25,23 @@ class App extends Component {
         id: "tnewskf"
       }
     ],
-    showPersons: false
+    showPersons: false,
+    showCockpit: true,
+    changeCounter: 0
   };
+
+  // componentDidMount = () => {
+  //   console.log("[app.js] didMount");
+  // };
+
+  // componentDidUpdate() {
+  //   console.log("[app.js] didUpdate");
+  // }
+
+  // shouldComponentUpdate(nextProp, nextState) {
+  //   console.log("[app.js] shouldUpdate");
+  //   return true;
+  // }
 
   nameChangeHandler = (e, id) => {
     const personIndex = this.state.persons.findIndex(person => {
@@ -38,10 +55,13 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
-    this.setState({
-      persons: persons
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1
+      };
     });
-  };
+  }; // use if depending on previous old state
 
   deletePersonHandler = personIndex => {
     const persons = [...this.state.persons];
@@ -71,16 +91,26 @@ class App extends Component {
     }
 
     return (
-      <div className={styles.App}>
-        <Cockpit
-          persons={this.state.persons}
-          showPersons={this.state.showPersons}
-          togglePersonHandler={this.togglePersonHandler}
-        />
+      <Aux>
+        <button
+          onClick={() =>
+            this.setState({ showCockpit: !this.state.showCockpit })
+          }
+        >
+          show pit
+        </button>
+        {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.title}
+            personsLength={this.state.persons.length}
+            showPersons={this.state.showPersons}
+            togglePersonHandler={this.togglePersonHandler}
+          />
+        ) : null}
         {persons}
-      </div>
+      </Aux>
     );
   }
 }
 
-export default App;
+export default withClass(App, styles.App);
