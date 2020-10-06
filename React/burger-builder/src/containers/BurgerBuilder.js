@@ -4,6 +4,9 @@ import Aux from "../../src/hoc/Aux";
 import Burger from "../../src/components/Burger/Burger";
 import BuildControls from "../components/Burger/BuildControls/BuildControls";
 
+import Modal from "../components/UI/Modal/Modal";
+import OrderSummary from "../components/Burger/OrderSummary/OrderSummary";
+
 const INGREDIENT_PRICES = {
   lettuce: 0.5,
   cheese: 0.4,
@@ -19,7 +22,8 @@ class BurgerBuilder extends Component {
       cheese: 0,
       meat: 0
     },
-    totalPrice: 4
+    totalPrice: 4,
+    isOrderReady: false
   };
 
   addIngredientHandler = type => {
@@ -38,6 +42,7 @@ class BurgerBuilder extends Component {
       totalPrice: newPrice,
       ingredients: updatedIngredients
     });
+    this.updateOrderStatus(updatedIngredients);
   };
 
   removeIngredientHandler = type => {
@@ -60,7 +65,19 @@ class BurgerBuilder extends Component {
       totalPrice: newPrice,
       ingredients: updatedIngredients
     });
+    this.updateOrderStatus(updatedIngredients);
   };
+
+  updateOrderStatus(ingredients) {
+    const sum = Object.keys(ingredients)
+      .map(igKey => {
+        return ingredients[igKey];
+      })
+      .reduce((sum, el) => {
+        return sum + el;
+      }, 0);
+    this.setState({ isOrderReady: sum > 0 });
+  }
 
   render() {
     const disabledInfo = {
@@ -73,12 +90,16 @@ class BurgerBuilder extends Component {
 
     return (
       <Aux>
+        <Modal>
+          <OrderSummary ingredients={this.state.ingredients} />
+        </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           addIngredientHandler={this.addIngredientHandler}
-          removeIngredientHandler={this.removeIngredientHandler}
           disabledInfo={disabledInfo}
+          removeIngredientHandler={this.removeIngredientHandler}
           totalPrice={this.state.totalPrice}
+          isOrderReady={this.state.isOrderReady}
         />
       </Aux>
     );
