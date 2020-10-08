@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import Aux from "../../src/hoc/Aux";
+import Aux from "../../src/hoc/Aux/Aux";
 import Burger from "../../src/components/Burger/Burger";
 import BuildControls from "../components/Burger/BuildControls/BuildControls";
 
