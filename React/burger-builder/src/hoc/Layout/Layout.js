@@ -2,9 +2,9 @@ import React, { Component } from "react";
 
 import styles from "./Layout.module.css";
 
-import Toolbar from "../Navigaton/Toolbar/Toolbar";
-import SideDrawer from "../Navigaton/SideDrawer/SideDrawer";
-import Aux from "../../hoc/Aux";
+import Toolbar from "../../components/Navigaton/Toolbar/Toolbar";
+import SideDrawer from "../../components/Navigaton/SideDrawer/SideDrawer";
+import Aux from "../Aux/Aux";
 
 class Layout extends Component {
   state = {
