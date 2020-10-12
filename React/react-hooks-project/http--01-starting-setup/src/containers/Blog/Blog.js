@@ -9,21 +9,27 @@ import "./Blog.css";
 class Blog extends Component {
   state = {
     posts: [],
-    selectedPostId: null
+    selectedPostId: null,
+    error: false
   };
 
   componentDidMount() {
-    axios.get("https://jsonplaceholder.typicode.com/posts").then(response => {
-      // for resticting how many responses most likey would be a backend query but for the now, this works
-      const posts = response.data.slice(0, 6);
-      const updatedPosts = posts.map(post => {
-        return {
-          ...post,
-          author: "Max"
-        };
+    axios
+      .get("https://jsonplaceholder.typicode.com/posts")
+      .then(response => {
+        // for resticting how many responses most likey would be a backend query but for the now, this works
+        const posts = response.data.slice(0, 6);
+        const updatedPosts = posts.map(post => {
+          return {
+            ...post,
+            author: "Max"
+          };
+        });
+        this.setState({ posts: updatedPosts });
+      })
+      .catch(response => {
+        this.setState({ error: true });
       });
-      this.setState({ posts: updatedPosts });
-    });
   }
 
   postSelectedHandler = id => {
@@ -31,16 +37,20 @@ class Blog extends Component {
   };
 
   render() {
-    const posts = this.state.posts.map(post => {
-      return (
-        <Post
-          key={post.id}
-          title={post.title}
-          author={post.author}
-          postSelectedHandler={() => this.postSelectedHandler(post.id)}
-        />
-      );
-    });
+    let posts = <p>Something went wrong!</p>;
+
+    if (!this.state.error) {
+      posts = this.state.posts.map(post => {
+        return (
+          <Post
+            key={post.id}
+            title={post.title}
+            author={post.author}
+            postSelectedHandler={() => this.postSelectedHandler(post.id)}
+          />
+        );
+      });
+    }
 
     return (
       <div>
