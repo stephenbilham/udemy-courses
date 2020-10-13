@@ -8,16 +8,16 @@ const withErrorHandler = (WrappedComponent, axios) => {
       error: null
     };
 
-    componentDidMount = () => {
+    componentWillMount = () => {
       axios.interceptors.request.use(req => {
-        this.setState({ error: null });
+        this.setState({ error: null }); // clears request if any prior
         return req;
       });
 
       axios.interceptors.response.use(
-        res => res,
+        res => res, //shortest way to return a response not using it
         error => {
-          this.setState({ error: error });
+          this.setState({ error: error }); // sets new request
         }
       );
     };
