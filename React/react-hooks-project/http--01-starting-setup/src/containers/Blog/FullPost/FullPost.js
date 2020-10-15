@@ -7,30 +7,40 @@ class FullPost extends Component {
   state = {
     loadedPost: null
   };
+  componentDidMount() {
+    // console.log(this.props);
+    this.loadData();
+  }
+
   componentDidUpdate() {
-    if (this.props.id) {
+    this.loadData();
+  }
+  deletePost = () => {
+    axios.delete("/posts/" + this.props.match.params.id).then(response => {
+      console.log(response);
+    });
+  };
+
+  loadData() {
+    if (this.props.match.params.id) {
       if (
         !this.state.loadedPost || // if we dont have a loaded post run it if we have different data than existing do it again // check network tab
-        (this.state.loadedPost && this.state.loadedPost.id !== this.props.id)
+        (this.state.loadedPost &&
+          this.state.loadedPost.id != this.props.match.params.id)
       ) {
-        axios.get("/posts/" + this.props.id).then(response => {
+        axios.get("/posts/" + this.props.match.params.id).then(response => {
           this.setState({ loadedPost: response.data });
         });
       }
     }
   }
 
-  deletePost = () => {
-    axios.delete("/posts/" + this.props.id).then(response => {
-      console.log(response);
-    });
-  };
-
   render() {
     let post = <p style={{ textAlign: "center" }}>Please select a Post!</p>;
-    if (this.props.id) {
+    if (this.props.match.params.id) {
       post = <p style={{ textAlign: "center" }}>loading...</p>;
     }
+
     if (this.state.loadedPost) {
       post = (
         <div className="FullPost">
