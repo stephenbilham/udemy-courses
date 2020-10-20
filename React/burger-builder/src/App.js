@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
 import Layout from "./hoc/Layout/Layout";
 import BurgerBuilder from "./containers/BurgerBuilder";
 import Checkout from "./containers/Checkout/Checkout";
@@ -7,12 +9,14 @@ import Checkout from "./containers/Checkout/Checkout";
 class App extends Component {
   render() {
     return (
-      <div>
+      <BrowserRouter>
         <Layout>
-          <BurgerBuilder />
-          <Checkout />
+          <Switch>
+            <Route path="/checkout" component={Checkout} />
+            <Route path="/" exact component={BurgerBuilder} />
+          </Switch>
         </Layout>
-      </div>
+      </BrowserRouter>
     );
   }
 }
