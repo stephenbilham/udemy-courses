@@ -9,7 +9,8 @@ const button = props => (
       props.purchaseContinueHandler ||
       props.modalClosed ||
       props.checkoutCancelledHandler ||
-      props.checkoutCancelledContinue
+      props.checkoutCancelledContinue ||
+      props.orderHandler
     }
   >
     {props.children}
