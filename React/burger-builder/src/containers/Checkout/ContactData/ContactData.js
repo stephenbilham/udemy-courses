@@ -4,15 +4,62 @@ import Button from "../../../components/UI/Button/Button";
 import axios from "../../../axios-orders";
 
 import Spinner from "../../../components/UI/Spinner/Spinner";
+import Input from "../../../components/UI/Input/Input";
 import styles from "./ContactData.module.css";
 
 class ContactData extends Component {
   state = {
-    name: "",
-    email: "",
-    address: {
-      street: "",
-      postalCode: ""
+    orderForm: {
+      name: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Your Name"
+        },
+        value: ""
+      },
+      street: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Street"
+        },
+        value: ""
+      },
+      zipCode: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "ZIP Code"
+        },
+        value: ""
+      },
+      country: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Country"
+        },
+        value: ""
+      },
+      email: {
+        elementType: "input",
+        elementConfig: {
+          type: "email",
+          placeholder: "Your Email"
+        },
+        value: ""
+      },
+      deliveryMethod: {
+        elementType: "select"
+        // elementConfig: {
+        //   options: [
+        //     { value: "fastest", displayValue: "fastest" },
+        //     { value: "cheapest", displayValue: "cheapest" }
+        //   ]
+        // },
+        // value: ""
+      }
     },
     loading: false
   };
@@ -22,17 +69,7 @@ class ContactData extends Component {
     this.setState({ loading: true });
     const order = {
       ingredients: this.props.ingredients,
-      price: this.props.price,
-      customer: {
-        name: "Stephen Bilham",
-        address: {
-          street: "Churchwood Dr",
-          zipCode: 92109,
-          country: "USA"
-        },
-        email: "test@test.com"
-      },
-      deliveryMethod: "fastest"
+      price: this.props.price
     };
     axios
       .post("/orders.json", order)
@@ -46,32 +83,27 @@ class ContactData extends Component {
   };
 
   render() {
+    let formElementsArray = [];
+
+    for (let key in this.state.orderForm) {
+      formElementsArray.push({
+        id: key,
+        config: this.state.orderForm[key]
+      });
+    }
+
+    //  { <!-- <Input elementType="" elementConfig="" value="" /> -->}
+
     let form = (
       <form>
-        <input
-          className={styles.Input}
-          type="text"
-          name="name"
-          placeholder="Your name"
-        />
-        <input
-          className={styles.Input}
-          type="text"
-          name="email"
-          placeholder="Your email"
-        />
-        <input
-          className={styles.Input}
-          type="text"
-          name="street"
-          placeholder="Street"
-        />
-        <input
-          className={styles.Input}
-          type="text"
-          name="postal"
-          placeholder="Postal Code"
-        />
+        {formElementsArray.map(formElement => (
+          <Input
+            key={formElement.id}
+            elementType={formElement.config.elementType}
+            elementConfig={formElement.config.elementConfig}
+            value={formElement.config.value}
+          />
+        ))}
         <Button btnType="Success" orderHandler={this.orderHandler}>
           ORDER
         </Button>
