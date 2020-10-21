@@ -22,7 +22,7 @@ class ContactData extends Component {
         elementType: "input",
         elementConfig: {
           type: "text",
-          placeholder: "Street"clea
+          placeholder: "Street"
         },
         value: ""
       },
