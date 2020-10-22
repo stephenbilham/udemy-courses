@@ -3,16 +3,16 @@ import React from "react";
 import styles from "./Input.module.css";
 
 const input = props => {
-  console.log(props);
   let inputElement = null;
 
-  switch (props.inputType) {
+  switch (props.elementType) {
     case "input":
       inputElement = (
         <input
           className={styles.InputElement}
           {...props.elementConfig}
           value={props.value}
+          onChange={props.changed}
         />
       );
       break;
@@ -23,10 +23,16 @@ const input = props => {
       break;
     case "select":
       inputElement = (
-        <select className={styles.InputElement} value={props.value}>
-          {props.elementConfig.options.map(option => {
-            return <option value={option.value}>{option.displayValue}</option>;
-          })}
+        <select
+          className={styles.InputElement}
+          value={props.value}
+          onChange={props.changed}
+        >
+          {props.elementConfig.options.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.displayValue}
+            </option>
+          ))}
         </select>
       );
       break;

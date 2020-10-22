@@ -51,14 +51,14 @@ class ContactData extends Component {
         value: ""
       },
       deliveryMethod: {
-        elementType: "select"
-        // elementConfig: {
-        //   options: [
-        //     { value: "fastest", displayValue: "fastest" },
-        //     { value: "cheapest", displayValue: "cheapest" }
-        //   ]
-        // },
-        // value: ""
+        elementType: "select",
+        elementConfig: {
+          options: [
+            { value: "fastest", displayValue: "fastest" },
+            { value: "cheapest", displayValue: "cheapest" }
+          ]
+        },
+        value: ""
       }
     },
     loading: false
