@@ -42,6 +42,7 @@ const input = props => {
           className={styles.InputElement}
           {...props.elementConfig}
           value={props.value}
+          onChange={props.changed}
         />
       );
   }

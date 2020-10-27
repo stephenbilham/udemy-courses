@@ -6,6 +6,7 @@ import axios from "../../../axios-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
 import styles from "./ContactData.module.css";
+import input from "../../../components/UI/Input/Input";
 
 class ContactData extends Component {
   state = {
@@ -67,9 +68,20 @@ class ContactData extends Component {
   orderHandler = e => {
     e.preventDefault();
     this.setState({ loading: true });
+
+    const formData = {};
+
+    for (let formElementIdentfier in this.state.orderForm) {
+      formData[formElementIdentfier] = this.state.orderForm[
+        formElementIdentfier
+      ].value;
+      // this names an object of {name: "value"} I do get confused on why you can set data[to its param like this but you can]
+    }
+
     const order = {
       ingredients: this.props.ingredients,
-      price: this.props.price
+      price: this.props.price,
+      orderData: formData
     };
     axios
       .post("/orders.json", order)
@@ -80,6 +92,17 @@ class ContactData extends Component {
       .catch(error => {
         this.setState({ loading: false });
       });
+  };
+
+  inputChangedHandler = (e, inputIdentifier) => {
+    const updatedOrderForm = {
+      ...this.state.orderForm
+    };
+
+    const updatedFormElement = { ...updatedOrderForm[inputIdentifier] };
+    updatedFormElement.value = e.target.value;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+    this.setState({ orderForm: updatedOrderForm });
   };
 
   render() {
@@ -95,18 +118,17 @@ class ContactData extends Component {
     //  { <!-- <Input elementType="" elementConfig="" value="" /> -->}
 
     let form = (
-      <form>
+      <form onSubmit={this.orderHandler}>
         {formElementsArray.map(formElement => (
           <Input
             key={formElement.id}
             elementType={formElement.config.elementType}
             elementConfig={formElement.config.elementConfig}
             value={formElement.config.value}
+            changed={e => this.inputChangedHandler(e, formElement.id)}
           />
         ))}
-        <Button btnType="Success" orderHandler={this.orderHandler}>
-          ORDER
-        </Button>
+        <Button btnType="Success">ORDER</Button>
       </form>
     );
 
@@ -124,3 +146,12 @@ class ContactData extends Component {
 }
 
 export default ContactData;
+
+// const formData = {};
+
+// for (let formElementIdentfier in this.state.orderForm) {
+//   formData[formElementIdentfier] = this.state.orderForm[
+//     formElementIdentfier
+//   ].value;
+// }
+// console.log(formData);
