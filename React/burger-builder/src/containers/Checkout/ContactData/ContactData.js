@@ -17,7 +17,12 @@ class ContactData extends Component {
           type: "text",
           placeholder: "Your Name"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true
+        },
+        valid: false,
+        touched: false
       },
       street: {
         elementType: "input",
@@ -25,7 +30,12 @@ class ContactData extends Component {
           type: "text",
           placeholder: "Street"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true
+        },
+        valid: false,
+        touched: false
       },
       zipCode: {
         elementType: "input",
@@ -33,7 +43,14 @@ class ContactData extends Component {
           type: "text",
           placeholder: "ZIP Code"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true,
+          minLength: 5,
+          maxLength: 5
+        },
+        valid: false,
+        touched: false
       },
       country: {
         elementType: "input",
@@ -41,7 +58,12 @@ class ContactData extends Component {
           type: "text",
           placeholder: "Country"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true
+        },
+        valid: false,
+        touched: false
       },
       email: {
         elementType: "input",
@@ -49,7 +71,12 @@ class ContactData extends Component {
           type: "email",
           placeholder: "Your Email"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true
+        },
+        valid: false,
+        touched: false
       },
       deliveryMethod: {
         elementType: "select",
@@ -59,10 +86,31 @@ class ContactData extends Component {
             { value: "cheapest", displayValue: "cheapest" }
           ]
         },
-        value: ""
+        value: "fastest",
+        valid: true,
+        validation: {},
+        touched: false,
+        formValid: false
       }
     },
     loading: false
+  };
+
+  checkValidity = (value, rules) => {
+    let formIsValid = true;
+    if (rules.required) {
+      formIsValid = value.trim() !== "" && formIsValid;
+    }
+
+    if (rules.minLength) {
+      formIsValid = value.length >= rules.minLength && formIsValid;
+    }
+
+    if (rules.maxLength) {
+      formIsValid = value.length <= rules.maxLength && formIsValid;
+    }
+
+    return formIsValid;
   };
 
   orderHandler = e => {
@@ -101,8 +149,19 @@ class ContactData extends Component {
 
     const updatedFormElement = { ...updatedOrderForm[inputIdentifier] };
     updatedFormElement.value = e.target.value;
+    updatedFormElement.valid = this.checkValidity(
+      updatedFormElement.value,
+      updatedFormElement.validation
+    );
+    updatedFormElement.touched = true;
     updatedOrderForm[inputIdentifier] = updatedFormElement;
-    this.setState({ orderForm: updatedOrderForm });
+
+    let formIsValid = true;
+
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+    }
+    this.setState({ orderForm: updatedOrderForm, formValid: formIsValid });
   };
 
   render() {
@@ -124,11 +183,16 @@ class ContactData extends Component {
             key={formElement.id}
             elementType={formElement.config.elementType}
             elementConfig={formElement.config.elementConfig}
+            invalid={!formElement.config.valid}
+            touched={formElement.config.touched}
+            shouldValidate={formElement.config.validation}
             value={formElement.config.value}
             changed={e => this.inputChangedHandler(e, formElement.id)}
           />
         ))}
-        <Button btnType="Success">ORDER</Button>
+        <Button btnType="Success" disabled={!this.state.formValid}>
+          ORDER
+        </Button>
       </form>
     );
 
@@ -146,12 +210,3 @@ class ContactData extends Component {
 }
 
 export default ContactData;
-
-// const formData = {};
-
-// for (let formElementIdentfier in this.state.orderForm) {
-//   formData[formElementIdentfier] = this.state.orderForm[
-//     formElementIdentfier
-//   ].value;
-// }
-// console.log(formData);
